@@ -1,2 +1,6 @@
 /* Import all of Bootstraps CSS */
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+#map {
+  height: 180px;
+}
