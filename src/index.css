@@ -4,3 +4,18 @@
 #map {
   height: 180px;
 }
+
+.cluster-icon {
+  height: 3rem;
+  width: 3rem;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

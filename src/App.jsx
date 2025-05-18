@@ -1,7 +1,8 @@
 import { MapContainer, TileLayer, Marker, useMap, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import Map from "./components/Map";
-import { Icon } from 'leaflet';
+import { Icon, divIcon, point } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import pinIcon from "./assets/gps.png";
 
@@ -28,13 +29,33 @@ function App() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
-        {
-          markers.map((marker, index) => (
-            <Marker key={index} position={marker.geocode} icon={customIcon}>
-              <Popup>{marker.popUp}</Popup>
-            </Marker>
-          ))
-        }
+        <MarkerClusterGroup
+          chunkedLoading={true}
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom={false}
+          spiderLegPolylineOptions={{
+            delay: 100,
+            color: '#000',
+            weight: 1,
+            opacity: 0.5,
+            lineCap: 'round',
+          }}
+          iconCreateFunction={(cluster) => {
+            return new divIcon({
+              html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+              className: 'marker-cluster-custom',
+              iconSize: point(40, 40, true),
+            });
+          }}
+        >
+          {
+            markers.map((marker, index) => (
+              <Marker key={index} position={marker.geocode} icon={customIcon}>
+                <Popup>{marker.popUp}</Popup>
+              </Marker>
+            ))
+          }
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );
